@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/jposted.css" />
+  </head>
+  <body>
+    <!-- Navbar Start -->
+
+    <%- include('../partials/admnavbar.ejs')%>
+
+    <!-- Navbar End -->
+    <div class="container">
+      <div><h2 class="heading">Jobs Posted by All Recruiters</h2></div>
+       <% if(job.length<=0) { %>
+         <h4 class="text-center mt-4 mb-4">No Recruiters found</h4>
+            <% }else{ %>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">JobId</th>
+              <th scope="col">Company</th>
+              <th scope="col">Job Title</th>
+              <th scope="col">Request</th>
+              <th scope="col">Job Type</th>
+              <th scope="col">App.Start</th>
+              <th scope="col">App.Close</th>
+              <th scope="col">Dates</th>
+              <th scope="col">Schedule</th>
+              <th scope="col">MoreInfo</th>
+              <th scope="col">Applications</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i=0;i<job.length;i++){ %>
+            <tr>
+              <th scope="row"><%- job[i].Job_id %></th>
+              <td><%- job[i].CompName %></td>
+              <td><%- job[i].Title %></td>
+              <td>
+                <%= job[i].JApproved === 1 ? 'Approved' : '' %><%=
+                job[i].JRejected === 1 ? 'Rejected' : '' %><%= job[i].JApproved
+                === 0 && job[i].JRejected === 0 ? 'Not Approved' : '' %>
+              </td>
+              
+              <td><%- job[i].Type %></td>
+              <% if(job[i].JApproved===1){ %>
+                <td><%= job[i].AppOpenDate.toLocaleDateString() %></td>
+              <td><%= job[i].AppCloseDate.toLocaleDateString() %></td>
+                <td><button onclick="toggleElement(this,'<%- job[i].Job_id %>t')" class="btn btn-warning btn-sm">Edit</button></td>
+                <td>
+                <form action="/ad/<%- adm.Emp_id %>/schedule" method="GET">
+                  <input type="hidden" name="jobid" value="<%- job[i].Job_id %>">
+                  <button type="submit" class="btn btn-secondary btn-sm">View</button>
+                </form>
+                </td>
+              <% }else{%>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <% } %>
+                
+                <td><button type="button" data-bs-toggle="modal" data-bs-target="#<%- job[i].Job_id %>" class="btn btn-outline-info btn-sm">Know More</button></td>
+                <% if(job[i].JApproved===1){ %>
+              <td>
+                <form action="/ad/<%- adm.Emp_id %>/applications" method="GET">
+                  <input type="hidden" name="jobid" value="<%- job[i].Job_id %>">
+                  <button type="submit" class="btn btn-primary btn-sm">View</button>
+                </form>
+              </td>
+              <% }else{%>
+                <td></td>
+                <% } %>
+            </tr>
+            <tr id="<%- job[i].Job_id %>t" style="display: none">
+            <td colspan="2">
+            <form
+            action="/ad/<%- adm.Emp_id %>/jobedit/<%- job[i].Job_id %>?_method=PUT"
+            method="POST"
+            class="validated-form"
+            
+          >
+              <label for="inputOpenDate" class="form-label"
+                >Application Open Date</label
+              >
+              </td>
+              <td colspan="2">
+              <input
+                name="AppOpenDate"
+                value="<%- job.AppOpenDate %>"
+                type="date"
+                class="form-control"
+                id="inputOpenDate"
+                required
+              />
+              
+            </td>
+            <td colspan="2">
+              <label for="inputCloseDate" class="form-label"
+                >Application Close Date</label
+              >
+            </td>
+            <td colspan="3">
+              <input
+                name="AppCloseDate"
+                type="date"
+                class="form-control"
+                id="inputCloseDate"
+                required
+              />
+              <div class="invalid-feedback">Invalid Date</div>
+            </td>
+            <td>
+            <button onclick="toggleElements(this,'<%- job[i].Job_id %>t')" type="button" class="btn btn-danger btn">
+              Cancel
+            </button>
+            </td>
+            <td>
+            <button type="submit" class="btn btn-success btn">
+              Submit
+            </button>
+            </form>
+            </td>
+        </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+    </div>
+    <% for(let i=0;i<job.length;i++) {%>
+      <div class="modal fade modal-lg" id="<%- job[i].Job_id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel"><%- job[i].Title %> - <%- job[i].CompName %></h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p style="font-size: 1.1em;"> <b>Company </b>: <%- job[i].Name %></p>
+              <p style="font-size: 1.1em;"><b>Website </b>: <a href="<%- job[i].Website %>"><%- job[i].Website %></a></p>
+              <p style="font-size: 1.1em;"><b>Sector </b>: <%- job[i].Sector %></p>
+              <p style="font-size: 1.1em;"><b>Industry </b>: <%- job[i].Industry %></p>
+              <p style="font-size: 1.1em;"><b>Job Title </b>: <%- job[i].Title %></p>
+              <p style="font-size: 1.1em;"><b>Workplace </b>: <%- job[i].Workplace %></p>
+              <p style="font-size: 1.1em;"><b>Location </b>: <%- job[i].Location %></p>
+              <p style="font-size: 1.1em;"><b>Type </b>: <%- job[i].Type %></p>
+              <p style="font-size: 1.1em;"><b>CTC/Stipend </b>: <%- job[i].Salary %> </p>
+              <p style="font-size: 1em;"><b> Expected No.of Hires </b>: <%- job[i].NoofHires %></p>
+              <p style="font-size: 1em;"><b>Job Description </b>: <a href="/uploads/Description/<%- job[i].Desfile %>" download="<%- job[i].Job_id %>">Download</a> </p>
+              <h4 style="font-size: 1.1em;">Eligibility Criteria</h4>
+              <p class="mt-3" style="font-size: 1.1em;"><b>Course(s) </b> : <%= job[i].BTechElg === 1 ? 'B.Tech' : ' ' %><%= job[i].MTechElg === 1 ? ' M.Tech' : ' ' %></p>
+              <p style="font-size: 1.1em;"><b>Department(s) </b>: <%= job[i].BioTechElg === 1 ? 'BioTech' : ' ' %> <%= job[i].CivilElg === 1 ? ' Civil' : ' ' %><%= job[i].ChemicalElg === 1 ? ' Chemical' : ' ' %><%= job[i].CSEElg === 1 ? ' CSE' : ' ' %><%= job[i].ECEElg === 1 ? ' ECE' : ' ' %><%= job[i].EEEElg === 1 ? ' EEE' : ' ' %><%= job[i].MechElg === 1 ? ' Mechanical' : ' ' %><%= job[i].MMEElg === 1 ? ' MME' : ' ' %> </p>
+              <p style="font-size: 1.1em;"><b>Year of Passing </b>: <%= job[i].Elg2023 === 1 ? '2023' : ' ' %><%= job[i].Elg2024 === 1 ? ' 2024' : ' ' %><%= job[i].Elg2025 === 1 ? ' 2025' : ' ' %><%= job[i].Elg2026 === 1 ? ' 2026' : ' ' %> </p>
+              <p style="font-size: 1.1em;"><b>CGPA </b>: <%- job[i].CGPA %> </p> 
+                <p style="font-size: 1.1em;"><b>CGPA </b>: <%- job[i].CGPA %> </p>
+                <p style="font-size: 1.1em;" class="d-inline"> <b>Selection Process </b> : <%= job[i].SFR === 1 ? 'ShortlistFromResume' : ' ' %><%= job[i].WT === 1 ? ' WrittenTest' : ' ' %><%= job[i].OT === 1 ? ' OnlineTest' : ' ' %><%= job[i].GD === 1 ? ' GroupDiscussion' : ' ' %><%= job[i].PI === 1 ? ' PersonalInterview' : ' ' %> </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+    
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      (function () {
+        "use strict";
+        const forms = document.querySelectorAll(".validated-form");
+        Array.from(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+    <script>
+        function toggleElement(bton,iden) {
+      const element = document.getElementById(iden);
+      if (element.hasAttribute("style")) {
+        element.removeAttribute("style");
+      }
+    }
+    function toggleElements(bton,iden) {
+      const element = document.getElementById(iden);
+      if (element.hasAttribute("style")) {
+        element.removeAttribute("style");
+      } else {
+        element.setAttribute("style","display:none");
+      }
+    }
+    </script>
+  </body>
+</html>

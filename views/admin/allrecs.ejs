@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/jposted.css" />
+  </head>
+  <body>
+    <!-- Navbar Start -->
+
+    <%- include('../partials/admnavbar.ejs')%>
+
+    <!-- Navbar End -->
+    <div class="container">
+      <div><h2 class="heading">Recruiters Registered</h2></div>
+      <% if(rec.length<=0) { %>
+         <h4 class="text-center mt-4 mb-4">No Recruiters found</h4>
+            <% }else{ %>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Comp.ID</th>
+              <th scope="col">Company</th>
+              <th scope="col">Coordinator</th>
+              <th scope="col">Website</th>
+              <th scope="col">Email</th>
+              <th scope="col">Request</th>
+              <th scope="col">JobsPosted</th>
+              <th scope="col">MoreInfo</th>
+              <th scope="col">Update</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i=0;i<rec.length;i++){ %>
+            <tr>
+              <td scope="row"><%- rec[i].Comp_id %></td>
+              <th><%- rec[i].Name %></th>
+              <td><%- rec[i].CoordName %></td>
+              <td><a href="<%- rec[i].Website %>" class="text-decoration-none" target="_blank" rel="noopener noreferrer">Click here</a></td>
+              <td><a href="mailto:<%- rec[i].Email %>" class="text-decoration-none"><%- rec[i].Email %></a></td>
+              <td><%= rec[i].Approved === 1 ? 'Approved' : '' %><%= rec[i].Rejected === 1 ? 'Rejected' : '' %><%= rec[i].Approved === 0 && rec[i].Rejected === 0 ? 'Not Approved' : '' %></td>
+              <% if(rec[i].Approved===1) {%>
+              <td><form action="/ad/<%- adm.Emp_id %>/postedjobs" method="GET">
+                <input type="hidden" name="compid" value="<%- rec[i].Comp_id %>">
+                <button type="submit" class="btn btn-secondary btn-sm">View</button>
+              </form></td>
+                <% }else{ %>
+                <td></td>
+                <% } %>
+                <td>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#<%- rec[i].Comp_id %>" class="btn btn-outline-info btn-sm">Know More</button>
+              </td>
+               <% if(rec[i].Approved===1) {%>
+              
+                <td><button type="button" data-bs-toggle="modal" data-bs-target="#<%- rec[i].Email %>" class="btn btn-danger btn">Cancel</button></td>
+             
+              <% }else if(rec[i].Rejected===1){ %>
+               
+                    <td><button type="button" data-bs-toggle="modal" data-bs-target="#<%- rec[i].Email %>" class="btn btn-success btn">Approve</button></td>
+                
+                <% }else{ %>
+                    <td></td>
+                    <% } %>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+    </div>
+    <% for(let i=0;i<rec.length;i++) {%>
+      <div class="modal fade modal-lg" id="<%- rec[i].Comp_id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel"><%- rec[i].Name %></h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p style="font-size: 1.1em;"><b>Company </b>: <%- rec[i].Name %></p>
+              <p style="font-size: 1.1em;"><b>Website </b>: <a href="<%- rec[i].Website %>"><%- rec[i].Website %></a></p>
+              <p style="font-size: 1.1em;"><b>Sector </b>: <%- rec[i].Sector %></p>
+              <p style="font-size: 1.1em;"><b>Industry </b>: <%- rec[i].Industry %></p>
+              <p style="font-size: 1.1em;"><b>Coordinator </b>: <%- rec[i].CoordName %></p>
+              <p style="font-size: 1.1em;"><b>Email </b>: <%- rec[i].Email %></p>
+              <p style="font-size: 1.1em;"><b>Contact </b>: <%- rec[i].Contact %></p>
+              <h4 style="font-size: 1.1em;">Company Address</h4>
+              <br>
+              <p style="font-size: 1.1em;"><b>Address </b>: <%- rec[i].Address %></p>
+              <p style="font-size: 1.1em;"><b>State </b>: <%- rec[i].State %></p>
+              <p style="font-size: 1.1em;"><b>Pincode </b>: <%- rec[i].Pincode %> </p> 
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+     <% for(let i=0;i<rec.length;i++) {%>
+      <div class="modal fade " id="<%- rec[i].Email %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel"><%- rec[i].Name %></h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <% if(rec[i].Approved === 1 ){ %>
+              <p>Do you wish to Cancel the Recruiter Registration?</p>
+              <% }else if(rec[i].Rejected===1){ %>
+                <p>Do you wish to Approve the Recruiter Registration?</p>
+                <% } %>
+            </div>
+            <div class="modal-footer">
+                <% if(rec[i].Approved === 1 ){ %>
+              <form action="/ad/<%- adm.Emp_id %>/recrej/<%- rec[i].Comp_id %>" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-info">Yes</button>
+              </form>
+              <% }else if(rec[i].Rejected===1){ %>
+              <form action="/ad/<%- adm.Emp_id %>/recapp/<%- rec[i].Comp_id %>" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-info">Yes</button>
+              </form>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

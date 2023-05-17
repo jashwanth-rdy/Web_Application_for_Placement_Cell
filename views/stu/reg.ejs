@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Registration - Trainig & Placement Cell-NITAP</title>
+    <link rel="icon" href="/images/logo1.png" type="image/icon type" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+
+    <style>
+      form i {
+        margin-left: -30px;
+        cursor: pointer;
+      }
+      .inval {
+        border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body class="d-flex flex-column vh-100">
+    <!-- Header Start -->
+
+    <%- include('../partials/header.ejs')%>
+
+    <!-- Header End -->
+
+    <!-- Navbar Start -->
+
+    <%- include('../partials/navbar.ejs')%>
+
+    <!-- Navbar End -->
+
+    <!-- Registration Page Start -->
+    <div class="full">
+      <div class="container py-3 ml-4">
+        <h2 class="py-3 text-center heading">Student Registration</h2>
+        <form
+          action="/stu/register"
+          method="POST"
+          class="row g-3 validated-form"
+          novalidate
+        >
+          <div class="col-md-4">
+            <label for="inputRollNo" class="form-label"
+              >Roll Number<sup class="mand">*</sup></label
+            >
+            <input
+              onblur="checkstudroll()"
+              name="RollNo"
+              type="number"
+              class="form-control"
+              id="inputRollNo"
+              min="100000"
+              max="899999"
+              maxlength="6"
+              required
+            />
+            <div class="valid-feedback">Looks good!</div>
+            <div id="inputRollNov" style="display: none">Invalid RollNo</div>
+          </div>
+          <div class="col-md-4">
+            <label for="inputFirstName" class="form-label"
+              >FirstName<sup class="mand">*</sup></label
+            >
+            <input
+              onblur="checkstudfn()"
+              name="FirstName"
+              type="text"
+              class="form-control"
+              id="inputFirstName"
+              required
+            />
+            <div class="valid-feedback">Looks good!</div>
+            <div id="inputFirstNamev" style="display: none">
+              This field is required
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="inputLastName" class="form-label"
+              >LastName<sup class="mand">*</sup></label
+            >
+            <input
+              onblur="checkstudln()"
+              name="LastName"
+              type="text"
+              class="form-control"
+              id="inputLastName"
+              required
+            />
+            <div class="valid-feedback">Looks good!</div>
+            <div id="inputLastNamev" style="display: none">
+              This field is required
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="inputCourse" class="form-label"
+              >Course<sup class="mand">*</sup></label
+            >
+            <select
+              onblur="checkstudcourse()"
+              name="Course"
+              id="inputCourse"
+              class="form-select"
+              required
+            >
+              <option selected disabled hidden value="">Select</option>
+              <option value="BTech">BTech</option>
+              <option value="MTech">MTech</option>
+            </select>
+            <div class="valid-feedback">Looks good!</div>
+            <div id="inputCoursev" style="display: none">
+              This field is required
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="inputDept" class="form-label"
+              >Department<sup class="mand">*</sup></label
+            >
+            <select
+              onblur="checkstuddep()"
+              name="Department"
+              id="inputDept"
+              class="form-select"
+              required
+            >
+              <option selected disabled hidden value="">Select</option>
+              <option value="BioTech">Bio Technology</option>
+              <option value="Civil">Civil Engineering</option>
+              <option value="Chemical">Chemical Engineering</option>
+              <option value="CSE">Computer Science & Engineering</option>
+              <option value="ECE">
+                Electronics & Communication Engineering
+              </option>
+              <option value="EEE">Electrical Engineering</option>
+              <option value="Mech">Mechanical Engineering</option>
+              <option value="MME">
+                Metallurgical and Materials Engineering
+              </option>
+            </select>
+            <div class="valid-feedback">Looks good!</div>
+            <div id="inputDeptv" style="display: none">
+              This field is required
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="inputYear" class="form-label"
+              >Year of Passing<sup class="mand">*</sup></label
+            >
+            <select
+              onblur="checkstudyop()"
+              name="YearofPassing"
+              id="inputYear"
+              class="form-select"
+              required
+            >
+              <option selected disabled hidden value="">Select</option>
+              <option value="2023">2023</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+            </select>
+            <div class="valid-feedback">Looks good!</div>
+            <div id="inputYearv" style="display: none">
+              This field is required
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputPEmail" class="form-label">Personal Email</label>
+            <input
+              onblur="checkstudpmail()"
+              name="PersonalEmail"
+              type="email"
+              class="form-control"
+              id="inputPEmail"
+              placeholder="Personal Mail"
+              pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            />
+            <div id="inputPEmailv" style="display: none">Invalid Email</div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputNumber" class="form-label">Contact Number</label>
+            <input
+              onblur="checkstudnum()"
+              value="NULL"
+              name="Contact"
+              type="number"
+              class="form-control"
+              id="inputNumber"
+              placeholder="Mobile Number"
+              min="1000000000"
+              max="9999999999"
+            />
+            <div id="inputNumberv" style="display: none">
+              Invalid Contact Number
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputEmail" class="form-label"
+              >Email<sup class="mand">*</sup></label
+            >
+            <input
+              onblur="checkstudimail()"
+              name="Email"
+              type="email"
+              class="form-control"
+              id="inputEmail"
+              pattern="[1-8][1|2][9|0|1|2][1-2][0-9][0-9]+@student\.nitandhra\.ac\.in"
+              required
+              placeholder="Institute Mail"
+            />
+            <div class="valid-feedback">Looks good!</div>
+            <div id="inputEmailv" style="display: none">Invalid Email</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputPassword" class="form-label"
+              >Password<sup class="mand">*</sup></label
+            >
+            <input
+              onblur="checkstudpass()"
+              name="Password"
+              type="password"
+              class="form-control d-inline"
+              id="inputPassword"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[#?!@$%^&*])(?=.*[A-Z]).{8,}"
+              required
+            /><i class="fa fa-eye" id="togglePassword"></i>
+            <div class="valid-feedback">Looks good!</div>
+            <div id="inputPasswordv" style="display: none">
+              Password must contain at least one number and one uppercase and
+              lowercase letter,one special character from [#?!@$%^&*] and at
+              least 8 or more characters long
+            </div>
+          </div>
+          <div class="col-12">
+            <p><sup class="mand">*</sup>Indicates Mandatory</p>
+          </div>
+          <div class="mb-3 col-4 captcha">
+            <label for="inputCaptcha" class="form-label">Enter Captcha</label>
+            <div class="preview"></div>
+            <input
+              type="text"
+              class="form-control d-inline"
+              id="inputCaptcha"
+              placeholder="Enter Captcha text"
+              required
+            /><i class="fa fa-refresh" id="toggleRefresh"></i>
+            <div class="invalid-feedback">Captcha doesnot Match</div>
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="gridCheck"
+                required
+              />
+              <label class="form-check-label" for="gridCheck">
+                I agree to all
+                <a href="#" class="text-decoration-none">Terms & Conditions</a>
+              </label>
+              <div class="invalid-feedback">
+                You must agree before submitting.
+              </div>
+            </div>
+          </div>
+          <div class="col-12 justify-content-center">
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
+        </form>
+        <div>
+          <br />
+          <p>
+            Already Registered?
+            <a href="/stu/login" class="text-decoration-none">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Page End  -->
+
+    <!-- Footer Start -->
+
+    <%- include('../partials/footer.ejs')%>
+
+    <!-- Footer End -->
+    <script>
+      (function () {
+        "use strict";
+        const forms = document.querySelectorAll(".validated-form");
+        Array.from(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        const fonts = ["cursive", "sans-serif", "serif", "monospace"];
+        let captchaValue = "";
+        function generateCaptcha() {
+          let value = btoa(Math.random() * 1000000000);
+          value = value.substr(0, 5 + Math.random() * 5);
+          captchaValue = value;
+        }
+        function setCaptcha() {
+          let html = captchaValue
+            .split(" ")
+            .map((char) => {
+              const rotate = Math.max(-20 + Math.trunc(Math.random() * 30), 0);
+              const font = Math.trunc(Math.random() * fonts.length);
+              return `<span style="
+            transform:rotate(${rotate}deg);
+            font-family:${fonts[font]}
+            ">${char}</span>`;
+            })
+            .join("");
+          document.querySelector(".preview").innerHTML = html;
+          document
+            .querySelector("#inputCaptcha")
+            .setAttribute("pattern", `${captchaValue}`);
+        }
+
+        function initCaptcha() {
+          const refresh = document.querySelector("#toggleRefresh");
+          refresh.addEventListener("click", () => {
+            generateCaptcha();
+            setCaptcha();
+          });
+          generateCaptcha();
+          setCaptcha();
+        }
+        initCaptcha();
+      })();
+    </script>
+    <script>
+      const togglePassword = document.querySelector("#togglePassword");
+
+      const password = document.querySelector("#inputPassword");
+
+      togglePassword.addEventListener("click", () => {
+        const type =
+          password.getAttribute("type") === "password" ? "text" : "password";
+        if (togglePassword.classList.contains("fa-eye")) {
+          togglePassword.classList.remove("fa-eye");
+          togglePassword.classList.add("fa-eye-slash");
+        } else {
+          togglePassword.classList.add("fa-eye");
+          togglePassword.classList.remove("fa-eye-slash");
+        }
+        password.setAttribute("type", type);
+        this.classList.toggle("bi-eye");
+      });
+    </script>
+    <script>
+      function checkstudroll() {
+        const ele = document.querySelector("#inputRollNo");
+        const ele2 = document.querySelector("#inputRollNov");
+        const val = ele.value;
+        if (val < 100000 || val > 999999) {
+          ele.classList.add("inval");
+          ele2.setAttribute("style", "color:red");
+        } else {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        }
+      }
+      function checkstudfn() {
+        const ele = document.querySelector("#inputFirstName");
+        const ele2 = document.querySelector("#inputFirstNamev");
+        const val = ele.value;
+        let pattern = /.{1,}/;
+        if (!pattern.test(val)) {
+          ele.classList.add("inval");
+          ele2.setAttribute("style", "color:red");
+        } else {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        }
+      }
+      function checkstudln() {
+        const ele = document.querySelector("#inputLastName");
+        const ele2 = document.querySelector("#inputLastNamev");
+        const val = ele.value;
+        let pattern = /.{1,}/;
+        if (!pattern.test(val)) {
+          ele.classList.add("inval");
+          ele2.setAttribute("style", "color:red");
+        } else {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        }
+      }
+      function checkstudcourse() {
+        const ele = document.querySelector("#inputCourse");
+        const ele2 = document.querySelector("#inputCoursev");
+        const val = ele.value;
+        if (val === "") {
+          ele.classList.add("inval");
+          ele2.setAttribute("style", "color:red");
+        } else {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        }
+      }
+      function checkstuddep() {
+        const ele = document.querySelector("#inputDept");
+        const ele2 = document.querySelector("#inputDeptv");
+        const val = ele.value;
+        if (val === "") {
+          ele.classList.add("inval");
+          ele2.setAttribute("style", "color:red");
+        } else {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        }
+      }
+      function checkstudyop() {
+        const ele = document.querySelector("#inputYear");
+        const ele2 = document.querySelector("#inputYearv");
+        const val = ele.value;
+        if (val === "") {
+          ele.classList.add("inval");
+          ele2.setAttribute("style", "color:red");
+        } else {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        }
+      }
+      function checkstudpmail() {
+        const ele = document.querySelector("#inputPEmail");
+        const ele2 = document.querySelector("#inputPEmailv");
+        const val = ele.value;
+        let pattern = /[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+        if (val === "") {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        } else if (!pattern.test(val)) {
+          ele.classList.add("inval");
+          ele2.setAttribute("style", "color:red");
+        } else {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        }
+      }
+      function checkstudnum() {
+        const ele = document.querySelector("#inputNumber");
+        const ele2 = document.querySelector("#inputNumberv");
+        const val = ele.value;
+        let pattern = /[6789][0-9]{9}/;
+        if (val === "") {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        } else if (!pattern.test(val)) {
+          ele.classList.add("inval");
+          ele2.setAttribute("style", "color:red");
+        } else {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        }
+      }
+      function checkstudimail() {
+        const ele = document.querySelector("#inputEmail");
+        const ele2 = document.querySelector("#inputEmailv");
+        const val = ele.value;
+        let pattern =
+          /[1-8][1|2][9|0|1|2][1-2][0-9][0-9]+@student\.nitandhra\.ac\.in/;
+        if (!pattern.test(val)) {
+          ele.classList.add("inval");
+          ele2.setAttribute("style", "color:red");
+        } else {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        }
+      }
+      function checkstudpass() {
+        const ele = document.querySelector("#inputPassword");
+        const ele2 = document.querySelector("#inputPasswordv");
+        const val = ele.value;
+        let pattern = /(?=.*\d)(?=.*[a-z])(?=.*[#?!@$%^&*])(?=.*[A-Z]).{8,}/;
+        if (!pattern.test(val)) {
+          ele.classList.add("inval");
+          ele2.setAttribute("style", "color:red");
+        } else {
+          ele2.setAttribute("style", "display:none");
+          ele.classList.remove("inval");
+        }
+      }
+    </script>
+  </body>
+</html>

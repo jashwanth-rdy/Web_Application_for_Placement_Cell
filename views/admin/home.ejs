@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/stu.css" />
+  </head>
+  <body>
+    <!-- Navbar Start -->
+
+    <%- include('../partials/admnavbar.ejs')%>
+
+    <!-- Navbar End -->
+
+    <div class="container-fluid head">
+      <h2 class="container">New Recruiter Registration Requests</h2>
+    </div>
+    <% if(rec.length <= 0 ){ %>
+              <h4 class="text-center mt-4 mb-4">No New Requests found</h4>
+            <% }else{ %>
+    <div class="container">
+      <div class="row">
+        <% for(let i=0;i<rec.length;i++){ %>
+        <div class="col-md-4 justify-content-center job-col">
+          <h3><%- rec[i].Name %></h3>
+          <a class="text-decoration-none" target="_blank" href="<%- rec[i].Website %>"><h4>Website</h4></a>
+          <p>Sector : <%- rec[i].Sector %></p>
+          <p>Coordinator : <%- rec[i].CoordName %></p>
+          <p>Email : <%- rec[i].Email %></p>
+           <button type="button" data-bs-toggle="modal" data-bs-target="#<%- rec[i].Email %>" class="btn btn-info">Approve/Reject</button>
+          <button type="button" data-bs-toggle="modal" data-bs-target="#<%- rec[i].Comp_id %>" class="btn btn-outline-info">Know More</button>
+        </div>
+        <% } %>
+        <% } %>
+      </div>
+    </div>
+    <div class="container-fluid head">
+      <h2 class="container">New Job Announcement Requests</h2>
+    </div>
+    <% if(job.length <= 0 ){ %>
+              <h4 class="text-center mt-4">No New Requests found</h4>
+            <% }else{ %>
+    <div class="container">
+      <div class="row">
+        <% for(let i=0;i<job.length;i++){ %>
+        <div class="col-md-4 justify-content-center job-col">
+          <h3><%- job[i].Title %></h3>
+          <a class="text-decoration-none" target="_blank" href="<%- job[i].Website %>"><h4><%- job[i].Name %></h4></a>
+          <p>Type : <%- job[i].Type %> </p>
+          <p>Location : <%- job[i].Location %></p>
+          <p>CTC/Stipend : <%- job[i].Salary %></p>
+          <button type="button" data-bs-toggle="modal" data-bs-target="#<%- job[i].Job_id %>AR" class="btn btn-info">Approve/Reject</button>
+          <button type="button" data-bs-toggle="modal" data-bs-target="#<%- job[i].Job_id %>" class="btn btn-outline-info">Know More</button>
+        </div>
+        <% }} %>
+      </div>
+    </div>
+    <% for(let i=0;i<rec.length;i++) {%>
+      <div class="modal fade modal-lg" id="<%- rec[i].Comp_id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel"><%- rec[i].Name %></h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p style="font-size: 1em;"><b>Company </b>: <%- rec[i].Name %></p>
+              <p style="font-size: 1em;"><b>Website </b>: <a href="<%- rec[i].Website %>"><%- rec[i].Website %></a></p>
+              <p style="font-size: 1em;"><b>Sector </b>: <%- rec[i].Sector %></p>
+              <p style="font-size: 1em;"><b>Industry </b>: <%- rec[i].Industry %></p>
+              <p style="font-size: 1em;"><b>Coordinator </b>: <%- rec[i].CoordName %></p>
+              <p style="font-size: 1em;"><b>Email </b>: <%- rec[i].Email %></p>
+              <p style="font-size: 1em;"><b>Contact </b>: <%- rec[i].Contact %></p>
+              <h4 style="font-size: 1em;">Company Address</h4>
+              <br>
+              <p style="font-size: 1em;"><b>Address </b>: <%- rec[i].Address %></p>
+              <p style="font-size: 1em;"><b>State </b>: <%- rec[i].State %></p>
+              <p style="font-size: 1em;"><b>Pincode </b>: <%- rec[i].Pincode %> </p> 
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#<%- rec[i].Email %>" class="btn btn-info">Approve/Reject</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+    <% for(let i=0;i<job.length;i++) {%>
+      <div class="modal fade modal-lg" id="<%- job[i].Job_id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel"><%- job[i].Title %> - <%- job[i].Name %></h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p style="font-size: 1em;"> <b>Company </b>: <%- job[i].Name %></p>
+              <p style="font-size: 1em;"><b>Website </b>: <a href="<%- job[i].Website %>"><%- job[i].Website %></a></p>
+              <p style="font-size: 1em;"><b>Sector </b>: <%- job[i].Sector %></p>
+              <p style="font-size: 1em;"><b>Industry </b>: <%- job[i].Industry %></p>
+              <p style="font-size: 1em;"><b>Job Title </b>: <%- job[i].Title %></p>
+              <p style="font-size: 1em;"><b>Workplace </b>: <%- job[i].Workplace %></p>
+              <p style="font-size: 1em;"><b>Location </b>: <%- job[i].Location %></p>
+              <p style="font-size: 1em;"><b>Type </b>: <%- job[i].Type %></p>
+              <p style="font-size: 1em;"><b>CTC/Stipend </b>: <%- job[i].Salary %> </p>
+              <p style="font-size: 1em;"><b> Expected No.of Hires </b>: <%- job[i].NoofHires %></p>
+              <p style="font-size: 1em;"><b>Job Description </b>: <a href="/uploads/Description/<%- job[i].Desfile %>" download="<%- job[i].Job_id %>">Download</a> </p>
+              <h4 style="font-size: 1em;">Eligibility Criteria</h4>
+              <p class="mt-3" style="font-size: 1em;"><b>Course(s) </b> : <%= job[i].BTechElg === 1 ? 'B.Tech' : ' ' %><%= job[i].MTechElg === 1 ? ' M.Tech' : ' ' %></p>
+              <p style="font-size: 1em;"><b>Department(s) </b>: <%= job[i].BioTechElg === 1 ? 'BioTech' : ' ' %> <%= job[i].CivilElg === 1 ? ' Civil' : ' ' %><%= job[i].ChemicalElg === 1 ? ' Chemical' : ' ' %><%= job[i].CSEElg === 1 ? ' CSE' : ' ' %><%= job[i].ECEElg === 1 ? ' ECE' : ' ' %><%= job[i].EEEElg === 1 ? ' EEE' : ' ' %><%= job[i].MechElg === 1 ? ' Mechanical' : ' ' %><%= job[i].MMEElg === 1 ? ' MME' : ' ' %> </p>
+              <p style="font-size: 1em;"><b>Year of Passing </b>: <%= job[i].Elg2023 === 1 ? '2023' : ' ' %><%= job[i].Elg2024 === 1 ? ' 2024' : ' ' %><%= job[i].Elg2025 === 1 ? ' 2025' : ' ' %><%= job[i].Elg2026 === 1 ? ' 2026' : ' ' %> </p>
+              <p style="font-size: 1em;"><b>CGPA </b>: <%- job[i].CGPA %> </p>
+                <p style="font-size: 1em;" class="d-inline"> <b>Selection Process </b> : <%= job[i].SFR === 1 ? 'ShortlistFromResume' : ' ' %><%= job[i].WT === 1 ? ' WrittenTest' : ' ' %><%= job[i].OT === 1 ? ' OnlineTest' : ' ' %><%= job[i].GD === 1 ? ' GroupDiscussion' : ' ' %><%= job[i].PI === 1 ? ' PersonalInterview' : ' ' %> </p>
+                
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+              <a href="/ad/<%- adm.Emp_id %>/jobapp/<%- job[i].Job_id %>" class="btn btn-info">Approve</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+    <% for(let i=0;i<rec.length;i++) {%>
+      <div class="modal fade " id="<%- rec[i].Email %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel"><%- rec[i].Name %></h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Do you wish to Approve the Recruiter Registration?</p>
+            </div>
+            <div class="modal-footer">
+              <form action="/ad/<%- adm.Emp_id %>/recrej/<%- rec[i].Comp_id %>" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-danger">Reject</button>
+              </form>
+              <form action="/ad/<%- adm.Emp_id %>/recapp/<%- rec[i].Comp_id %>" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-success">Approve</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+    <% for(let i=0;i<job.length;i++) {%>
+      <div class="modal fade " id="<%- job[i].Job_id %>AR" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel"><%- job[i].Title %></h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Do you wish to Approve the Recruitment Drive Request?</p>
+            </div>
+            <div class="modal-footer">
+              <form action="/ad/<%- adm.Emp_id %>/jobrej/<%- job[i].Job_id %>" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-danger">Reject</button>
+              </form>
+              <a href="/ad/<%- adm.Emp_id %>/jobapp/<%- job[i].Job_id %>" class="btn btn-success">Approve</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

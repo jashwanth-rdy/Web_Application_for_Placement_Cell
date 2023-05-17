@@ -1,0 +1,136 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary py-3 py-lg-4 sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="/stu/<%- stud.RollNo%>"> Placement Cell</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse justify-content-end container-fluid"
+      id="navbarNavDropdown"
+    >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            aria-current="page"
+            href="/stu/<%- stud.RollNo%>"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle active"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Placement Drives
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                href="/stu/<%- stud.RollNo%>/jobs/ongoing"
+                >Ongoing</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="/stu/<%- stud.RollNo%>/jobs/completed"
+                >Completed</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="/stu/<%- stud.RollNo%>/jobs/upcoming"
+                >Upcoming</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle active"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Internships
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                href="/stu/<%- stud.RollNo%>/interns/ongoing"
+                >Ongoing</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="/stu/<%- stud.RollNo%>/interns/completed"
+                >Completed</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="/stu/<%- stud.RollNo%>/interns/upcoming"
+                >Upcoming</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            href="/stu/<%- stud.RollNo%>/application-status"
+            >Applications</a
+          >
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle active"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <%- stud.FirstName %>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="/stu/<%- stud.RollNo%>/profile"
+                >Profile</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="/stu/<%- stud.RollNo%>/changepassword"
+                >Change Password</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="/stu/login">Logout</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

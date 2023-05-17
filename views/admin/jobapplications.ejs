@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/jposted.css" />
+  </head>
+  <body>
+    <!-- Navbar Start -->
+
+    <%- include('../partials/admnavbar.ejs')%>
+
+    <!-- Navbar End -->
+    <div class="container">
+      <div>
+        <h3 class="heading">Applications Recieved</h3>
+      </div>
+      <% if(appl.length <= 0 ){ %>
+              <h4 class="text-center mt-4">No Applications found</h4>
+            <% }else{ %>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">App.No.</th>
+              <th scope="col">Roll.No.</th>
+              <th scope="col">Name</th>
+              <th scope="col">Course</th>
+              <th scope="col">Department</th>
+              <th scope="col">Year of Passing</th>
+              <th scope="col">CGPA</th>
+              <th scope="col">Resume</th>
+              <th scope="col">Status</th>
+              <th scope="col">Edit</th>
+              <!-- <th scope="col">Match</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i=0;i<appl.length;i++){ %>
+            <tr>
+              <th scope="row"><%- appl[i].App_id %></th>
+              <td><%- appl[i].RollNo %></td>
+              <td><%- appl[i].FirstName %> <%- appl[i].LastName %></td>
+              <td><%- appl[i].Course %></td>
+              <td><%- appl[i].Department %></td>
+              <td><%- appl[i].YearofPassing %></td>
+              <td><%- appl[i].AppCGPA %></td>
+              <td><a href="/uploads/Resumes/<%- appl[i].Resume %>" download="<%- appl[i].App_id %>">Download</a></td>
+              <td><%- appl[i].Status %></td>
+              <td><button onclick="toggleElement(this,'<%- appl[i].App_id %>t')" class="btn btn-warning btn-sm">Edit</button></td>
+            </tr>
+            <tr id="<%- appl[i].App_id %>t" style="display: none">
+            <td></td>
+            <td colspan="2">
+            <form
+            action="/ad/<%- adm.Emp_id %>/jappstatus/<%- appl[i].App_id %>?_method=PUT"
+            method="POST"
+            class="validated-form"
+            
+          >
+              <label for="inputStatus" class="form-label"
+                >Application Status</label
+              >
+              </td>
+              <td colspan="2">
+                <input type="hidden" name="Job_id" value="<%- appl[i].Job_id %>">
+              <input
+                name="Status"
+                type="text"
+                class="form-control d-inline"
+                id="inputStatus"
+                required
+              />
+              
+            </td>
+            <td></td>
+            <td></td>
+            
+            <td>
+            <button onclick="toggleElements(this,'<%- appl[i].App_id %>t')" type="button" class="btn btn-danger btn">
+            Cancel
+            </button>
+            </td>
+            <td>
+            <button type="submit" class="btn btn-success btn">
+            Submit
+            </button>
+            </form>
+            </td>
+            <td></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+     <script>
+      (function () {
+        "use strict";
+        const forms = document.querySelectorAll(".validated-form");
+        Array.from(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+    <script>
+        function toggleElement(bton,iden) {
+      const element = document.getElementById(iden);
+      if (element.hasAttribute("style")) {
+        element.removeAttribute("style");
+      }
+    }
+    function toggleElements(bton,iden) {
+      const element = document.getElementById(iden);
+      if (element.hasAttribute("style")) {
+        element.removeAttribute("style");
+      } else {
+        element.setAttribute("style","display:none");
+      }
+    }
+    </script>
+  </body>
+</html>

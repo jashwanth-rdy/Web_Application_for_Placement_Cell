@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/rprof.css" />
+  </head>
+  <body>
+    <!-- Navbar Start -->
+
+    <%- include('../partials/recnavbar.ejs')%>
+
+    <!-- Navbar End -->
+
+    <!-- Profie Page Start -->
+
+    <div class="container">
+      <h2 id="prof">Profile</h2>
+      <form action="/rec/<%- rec.Comp_id %>/profile?_method=PUT" method="POST" class="row g-3 validated-form" novalidate>
+        <div class="col-md-6">
+          <label for="inputCompany" class="form-label">Company</label>
+          <input
+            name="Name"
+            type="text"
+            class="form-control"
+            id="inputCompany"
+            value="<%- rec.Name %>"
+            readonly
+            required
+          />
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-6">
+          <label for="inputUrl" class="form-label">Website</label>
+          <input
+            name="Website"
+            type="url"
+            class="form-control"
+            id="inputUrl"
+            value="<%- rec.Website %>"
+            pattern="https?://.+"
+            readonly
+            required
+          />
+          <div class="invalid-feedback">
+            Url must start with http:// or https:// followed by atleast one
+            character
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="inputSector" class="form-label">Sector</label>
+          <select
+            name="Sector"
+            id="inputSector"
+            class="form-select"
+            style="pointer-events: none"
+            required
+          >
+            <option <%= rec.Sector == 'Private' ? 'selected' : ''  %> value="Private">Private</option>
+            <option <%= rec.Sector == 'Public' ? 'selected' : ''  %> value="Public">Public</option>
+            <option <%= rec.Sector == 'PSU' ? 'selected' : ''  %> value="PSU">PSU</option>
+            <option <%= rec.Sector == 'NGO' ? 'selected' : ''  %> value="NGO">NGO</option>
+            <option <%= rec.Sector == 'StartUp' ? 'selected' : ''  %> value="StartUp">Start-up</option>
+            <option <%= rec.Sector == 'MNC' ? 'selected' : ''  %> value="MNC">MNC</option>
+            <option <%= rec.Sector == 'Other' ? 'selected' : ''  %> value="Other">Other</option>
+          </select>
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-6">
+          <label for="inputIndustry" class="form-label">Industry</label>
+          <select
+            name="Industry"
+            id="inputIndustry"
+            class="form-select"
+            style="pointer-events: none"
+            required
+          >
+            <option <%= rec.Industry == 'Core' ? 'selected' : ''  %> value="Core">Core Engg.</option>
+            <option <%= rec.Industry == 'Consultancy' ? 'selected' : ''  %> value="Consultancy">Consulting</option>
+            <option <%= rec.Industry == 'Trading' ? 'selected' : ''  %> value="Trading">Trading</option>
+            <option <%= rec.Industry == 'IT' ? 'selected' : ''  %> value="IT">IT</option>
+            <option <%= rec.Industry == 'Networking' ? 'selected' : ''  %> value="Networking">Networking</option>
+            <option <%= rec.Industry == 'Automobile' ? 'selected' : ''  %> value="Automobile">Automobile</option>
+            <option <%= rec.Industry == 'Finance' ? 'selected' : ''  %> value="Finance">Finance</option>
+            <option <%= rec.Industry == 'Educational' ? 'selected' : ''  %> value="Educational">Eductaional</option>
+            <option <%= rec.Industry == 'Analytics' ? 'selected' : ''  %> value="Analytics">Analytics</option>
+            <option <%= rec.Industry == 'Marketing' ? 'selected' : ''  %> value="Marketing">Marketing</option>
+            <option <%= rec.Industry == 'R&D' ? 'selected' : ''  %> value="R&D">Research & Development</option>
+            <option <%= rec.Industry == 'HealthCare' ? 'selected' : ''  %> value="HealthCare">Health Care</option>
+            <option <%= rec.Industry == 'Other' ? 'selected' : ''  %> value="Other">Other</option>
+          </select>
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-6">
+          <label for="inputCoordinator" class="form-label">Coordinator</label>
+          <input
+            name="CoordName"
+            type="text"
+            class="form-control"
+            id="inputCoordinator"
+            placeholder="Coordinator Name"
+            value="<%- rec.CoordName %>"
+            readonly
+            required
+          />
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-6">
+          <label for="inputNumber" class="form-label">Contact Number </label>
+          <input
+            <%= rec.Contact == null ? '' : 'value='%><%-rec.Contact%>
+            name="Contact"  
+            type="number"
+            class="form-control"
+            id="inputNumber"
+            placeholder="Mobile Number"
+            min="1000000000"
+            max="9999999999"
+            readonly
+          />
+          <div class="invalid-feedback">Invalid Number</div>
+        </div>
+        <div class="col-md-6">
+          <label for="inputEmail" class="form-label">Email</label>
+          <input
+            name="Email"
+            type="email"
+            class="form-control"
+            id="inputEmail"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            value="<%- rec.Email %>"
+            disabled
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="inputAlEmail" class="form-label">Alternate Email</label>
+          <input
+            <%= rec.AlternateEmail == null ? '' : 'value='%><%-rec.AlternateEmail%>
+            name="AlternateEmail"
+            type="email"
+            class="form-control"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            id="inputAlEmail"
+            placeholder="Alternate Mail"
+            readonly
+          />
+          <div class="invalid-feedback">Invalid Email</div>
+        </div>
+        <div class="col-md-6">
+          <label for="inputAddress" class="form-label">Company Address</label>
+          <input
+            name="Address"
+            type="text"
+            class="form-control"
+            id="inputAddress"
+            value="<%- rec.Address %>"
+            readonly
+            required
+          />
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">State</label>
+          <select
+            name="State"
+            id="inputState"
+            class="form-select"
+            style="pointer-events: none"
+            required
+          >
+          <% const options = [ "Andhra Pradesh", "Arunachal Pradesh",
+              "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana",
+              "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka",
+              "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+              "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
+              "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand",
+              "UttarPradesh", "West Bengal", "Andaman and Nicobar Islands",
+              "Chandigarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi",
+              "Lakshadweep", "Puducherry"];
+            for ( let i = 0; i < options.length; i++ )
+            {
+                let selec = ( rec.State == options[i] ) ? 'selected' : '';
+            %>
+                <option value="<%=options[i] %>" <%=selec %>><%=options[i] %></option>
+            <%}%>
+          </select>
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Pincode</label>
+          <input
+            name="Pincode"
+            type="number"
+            class="form-control"
+            min="100000"
+            max="999999"
+            id="inputZip"
+            value="<%- rec.Pincode %>"
+            readonly
+            required
+          />
+          <div class="invalid-feedback">Invalid Pincode</div>
+        </div>
+        <div class="col-12">
+          <button id="editprof" type="button" class="btn btn-secondary">
+            Edit
+          </button>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      (function () {
+        "use strict";
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll(".validated-form");
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+    <script src="/javascript/recprofileedit.js"></script>
+  </body>
+</html>

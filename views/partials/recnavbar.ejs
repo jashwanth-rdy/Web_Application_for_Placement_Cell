@@ -1,0 +1,72 @@
+<nav
+  class="navbar navbar-expand-lg bg-body-tertiary bg-dark py-3 py-lg-4 sticky-top"
+  data-bs-theme=""
+>
+  <div class="container">
+    <a class="navbar-brand" href="/rec/<%- rec.Comp_id %>"> Placement Cell</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse justify-content-end container-fluid"
+      id="navbarNavDropdown"
+    >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            aria-current="page"
+            href="/rec/<%- rec.Comp_id %>"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/rec/<%- rec.Comp_id %>/newjob"
+            >Post New Job</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/rec/<%- rec.Comp_id %>/postedjobs"
+            >Posted Jobs</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/rec/<%- rec.Comp_id %>/profile"
+            >Profile</a
+          >
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle active"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <%- rec.CoordName %>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                href="/rec/<%- rec.Comp_id%>/changepassword"
+                >Change Password</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="/rec/login">Logout</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

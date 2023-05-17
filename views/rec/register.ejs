@@ -1,0 +1,387 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Recruiter Registration - Trainig & Placement Cell-NITAP</title>
+
+    <link rel="icon" href="/images/logo1.png" type="image/icon type" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+
+    <style>
+      form i {
+        margin-left: -30px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body class="d-flex flex-column vh-100">
+    <!-- Header Start -->
+
+    <%- include('../partials/header.ejs')%>
+
+    <!-- Header End -->
+
+    <!-- Navbar Start -->
+
+    <%- include('../partials/navbar.ejs')%>
+
+    <!-- Navbar End -->
+
+    <!-- Registration Page Start -->
+    <div class="full">
+      <div class="container py-3 ml-4">
+        <h2 class="py-3 text-center heading">Recruiter Registration</h2>
+        <form
+          action="/rec/register"
+          method="POST"
+          class="row g-3 validated-form"
+          novalidate
+        >
+          <div class="col-md-6">
+            <label for="inputCompany" class="form-label"
+              >Company<sup class="mand">*</sup></label
+            >
+            <input
+              name="Name"
+              type="text"
+              class="form-control"
+              id="inputCompany"
+              placeholder="Company Name"
+              required
+            />
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputUrl" class="form-label"
+              >Website<sup class="mand">*</sup></label
+            >
+            <input
+              name="Website"
+              type="url"
+              class="form-control"
+              id="inputUrl"
+              placeholder="https://www.companyname.com"
+              pattern="https?://.+"
+              required
+            />
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">
+              Url must start with http:// or https://
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputSector" class="form-label"
+              >Sector<sup class="mand">*</sup></label
+            >
+            <select name="Sector" id="inputSector" class="form-select" required>
+              <option selected disabled hidden value="">Select</option>
+              <option value="Private">Private</option>
+              <option value="Public">Public</option>
+              <option value="PSU">PSU</option>
+              <option value="NGO">NGO</option>
+              <option value="StartUp">Start-up</option>
+              <option value="MNC">MNC</option>
+              <option value="Other">Other</option>
+            </select>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputIndustry" class="form-label"
+              >Industry<sup class="mand">*</sup></label
+            >
+            <select
+              name="Industry"
+              id="inputIndustry"
+              class="form-select"
+              required
+            >
+              <option selected disabled hidden value="">Select</option>
+              <option value="Core">Core Engg.</option>
+              <option value="Consultancy">Consulting</option>
+              <option value="Trading">Trading</option>
+              <option value="IT">IT</option>
+              <option value="Networking">Networking</option>
+              <option value="Automobile">Automobile</option>
+              <option value="Finance">Finance</option>
+              <option value="Educational">Eductaional</option>
+              <option value="Analytics">Analytics</option>
+              <option value="Marketing">Marketing</option>
+              <option value="R&D">R&D</option>
+              <option value="HealthCare">Health Care</option>
+              <option value="Other">Other</option>
+            </select>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputName" class="form-label"
+              >Coordinator<sup class="mand">*</sup></label
+            >
+            <input
+              name="CoordName"
+              type="text"
+              class="form-control"
+              id="inputName"
+              placeholder="Coordinator Name"
+              required
+            />
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputNumber" class="form-label">Contact Number </label>
+            <input
+              name="Contact"
+              type="number"
+              class="form-control"
+              id="inputNumber"
+              placeholder="Mobile Number"
+              min="1000000000"
+              max="9999999999"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="inputEmail" class="form-label"
+              >Email<sup class="mand">*</sup></label
+            >
+            <input
+              name="Email"
+              type="email"
+              class="form-control"
+              id="inputEmail"
+              pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+              required
+            />
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Invalid Email</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputPassword" class="form-label"
+              >Password<sup class="mand">*</sup></label
+            >
+            <input
+              name="Password"
+              type="password"
+              class="form-control d-inline"
+              id="inputPassword"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[#?!@$%^&*])(?=.*[A-Z]).{8,}"
+              required
+            /><i class="fa fa-eye" id="togglePassword"></i>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">
+              Password must contain at least one number and one uppercase and
+              lowercase letter,one special character from [#?!@$%^&*] and at
+              least 8 or more characters long
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputAddress" class="form-label"
+              >Company Address<sup class="mand">*</sup></label
+            >
+            <input
+              name="Address"
+              type="text"
+              class="form-control"
+              id="inputAddress"
+              required
+            />
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <div class="col-md-4">
+            <label for="inputState" class="form-label"
+              >State<sup class="mand">*</sup></label
+            >
+            <select name="State" id="inputState" class="form-select" required>
+              <option selected disabled hidden value="">Select</option>
+              <% const options = [ "Andhra Pradesh", "Arunachal Pradesh",
+              "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana",
+              "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka",
+              "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+              "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
+              "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand",
+              "UttarPradesh", "West Bengal", "Andaman and Nicobar Islands",
+              "Chandigarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi",
+              "Lakshadweep", "Puducherry"]; %> <% for ( let i = 0; i <
+              options.length; i++ ) { %>
+              <option value="<%=options[i] %>"><%=options[i] %></option>
+              <% } %>
+            </select>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <div class="col-md-2">
+            <label for="inputZip" class="form-label"
+              >Pincode<sup class="mand">*</sup></label
+            >
+            <input
+              name="Pincode"
+              type="number"
+              placeholder="123456"
+              class="form-control"
+              min="100000"
+              max="999999"
+              id="inputZip"
+              required
+            />
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Invalid Pincode</div>
+          </div>
+          <div class="col-12">
+            <p><sup class="mand">*</sup>Indicates Mandatory</p>
+          </div>
+          <div class="mb-3 col-4 captcha">
+            <label for="inputCaptcha" class="form-label">Enter Captcha</label>
+            <div class="preview"></div>
+            <input
+              type="text"
+              class="form-control d-inline"
+              id="inputCaptcha"
+              placeholder="Enter Captcha text"
+              required
+            /><i class="fa fa-refresh" id="toggleRefresh"></i>
+            <div class="invalid-feedback">Captcha doesnot Match</div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="gridCheck"
+                required
+              />
+              <label class="form-check-label" for="gridCheck">
+                I agree to all
+                <a href="#" class="text-decoration-none">Terms & Conditions</a>
+              </label>
+              <div class="invalid-feedback">
+                You must agree before submitting.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
+        </form>
+        <div>
+          <br />
+          <p>
+            Already Registered?
+            <a href="/rec/login" class="text-decoration-none">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Page End  -->
+
+    <!-- Footer Start -->
+
+    <%- include('../partials/footer.ejs')%>
+
+    <!-- Footer End -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      (function () {
+        "use strict";
+        const forms = document.querySelectorAll(".validated-form");
+        Array.from(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        const fonts = ["cursive", "sans-serif", "serif", "monospace"];
+        let captchaValue = "";
+        function generateCaptcha() {
+          let value = btoa(Math.random() * 1000000000);
+          value = value.substr(0, 5 + Math.random() * 5);
+          captchaValue = value;
+        }
+        function setCaptcha() {
+          let html = captchaValue
+            .split(" ")
+            .map((char) => {
+              const rotate = Math.max(-20 + Math.trunc(Math.random() * 30), 0);
+              const font = Math.trunc(Math.random() * fonts.length);
+              return `<span style="
+            transform:rotate(${rotate}deg);
+            font-family:${fonts[font]}
+            ">${char}</span>`;
+            })
+            .join("");
+          document.querySelector(".preview").innerHTML = html;
+          document
+            .querySelector("#inputCaptcha")
+            .setAttribute("pattern", `${captchaValue}`);
+        }
+
+        function initCaptcha() {
+          const refresh = document.querySelector("#toggleRefresh");
+          refresh.addEventListener("click", () => {
+            generateCaptcha();
+            setCaptcha();
+          });
+          generateCaptcha();
+          setCaptcha();
+        }
+        initCaptcha();
+      })();
+    </script>
+    <script>
+      const togglePassword = document.querySelector("#togglePassword");
+
+      const password = document.querySelector("#inputPassword");
+
+      togglePassword.addEventListener("click", () => {
+        const type =
+          password.getAttribute("type") === "password" ? "text" : "password";
+        if (togglePassword.classList.contains("fa-eye")) {
+          togglePassword.classList.remove("fa-eye");
+          togglePassword.classList.add("fa-eye-slash");
+        } else {
+          togglePassword.classList.add("fa-eye");
+          togglePassword.classList.remove("fa-eye-slash");
+        }
+        password.setAttribute("type", type);
+        this.classList.toggle("bi-eye");
+      });
+    </script>
+  </body>
+</html>

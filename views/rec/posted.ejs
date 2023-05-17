@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recruiter</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/jposted.css" />
+  </head>
+  <body>
+    <!-- Navbar Start -->
+
+    <%- include('../partials/recnavbar.ejs')%>
+
+    <!-- Navbar End -->
+    <div class="container">
+      <div><h2 class="heading">List of Jobs Posted</h2></div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">JobId</th>
+              <th scope="col">Job Title</th>
+              <th scope="col">Location</th>
+              <th scope="col">Job Type</th>
+              <th scope="col">CTC/Stipend</th>
+              <th scope="col">Request</th>
+              <th scope="col">AppLastDate</th>
+              <th scope="col">Applications</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i=0;i<job.length;i++){ %>
+            <tr>
+              <th scope="row"><%- job[i].Job_id %></th>
+              <td><%- job[i].Title %></td>
+              <td><%- job[i].Location %></td>
+              <td><%- job[i].Type %></td>
+              <td><%- job[i].Salary %></td>
+              <% if(job[i].JApproved===1){ %>
+              <td>Approved</td>
+              <% } else if(job[i].JRejected===1){ %>
+                <td>Rejected</td>
+                <% }else if(job[i].JApproved===0 && job[i].JRejected===0){ %>
+                  <td>Not Approved</td>
+                  <% } %>
+                  <% if(job[i].JApproved===1){ %>
+              <td><%- job[i].AppCloseDate.toLocaleDateString() %></td>
+              <% } else if(job[i].JRejected===1){ %>
+                <td></td>
+                <% }else if(job[i].JApproved===0 && job[i].JRejected===0){ %>
+                  <td></td>
+                  <% } %>
+              <% if(job[i].JApproved===1) {%>
+              <td>
+                <a href="/rec/<%- rec.Comp_id %>/<%- job[i].Job_id %>/applications"
+                  >Click here</a
+                >
+              </td>
+              <% }else{ %>
+                <td></td>
+                <% } %>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

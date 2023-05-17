@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Announcement</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/jform.css" />
+  </head>
+  <body>
+    <!-- Navbar Start -->
+
+    <%- include('../partials/recnavbar.ejs')%>
+
+    <!-- Navbar End -->
+    <div class="container form">
+      <h2 class="heading">Job Announcement Form</h2>
+      <div class="container">
+      <form action="/rec/<%- rec.Comp_id %>/newjob" method="POST" class="row g-3 validated-form" enctype="multipart/form-data" novalidate>
+        <span class="subheadingsj"><h5>Job Profile</h5></span>
+        <input type="hidden" name="folder" value="Description">
+        <input type="hidden" name="id" value="<%- rec.Comp_id %>">
+        <input type="hidden" name="CompName" value="<%- rec.Name %>">
+
+        <div class="col-md-6">
+          <label for="inputCompany" class="form-label"
+            >Company <sup class="mand">*</sup></label
+          >
+          <input
+            name="Name"
+            type="text"
+            class="form-control"
+            id="inputCompany"
+            value="<%- rec.Name %>"
+            aria-label="disabled input "
+            disabled
+          />
+          <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-6">
+          <label for="inputTitle" class="form-label"
+            >Job Title <sup class="mand">*</sup>
+          </label>
+          <input name="Title" type="text" class="form-control" id="inputTitle" required />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="inputWork" class="form-label"
+            >Workplace Type <sup class="mand">*</sup></label
+          >
+          <select name="Workplace" id="inputWork" class="form-select" required>
+            <option selected disabled hidden value="">Select</option>
+            <option value="On-Site">On-Site</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="Remote">Remote</option>
+          </select>
+          <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-4">
+          <label for="inputLocation" class="form-label"
+            >Location(NA if Remote) <sup class="mand">*</sup>
+          </label>
+          <input
+          name="Location"
+            type="text"
+            class="form-control"
+            id="inputLocation"
+            placeholder=""
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-4">
+          <label for="inputType" class="form-label"
+            >Job Type <sup class="mand">*</sup></label
+          >
+          <select oninput="Change(this)" name="Type" id="inputType" class="form-select" required>
+            <option selected disabled hidden value="">Select</option>
+            <option value="Full-time">Full-time</option>
+            <option value="Internship">Internship</option>
+          </select>
+          <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-4">
+          <label for="inputNumber" class="form-label"
+            >No. of Expected Hires
+          </label>
+          <input
+            name="NoofHires"
+            type="number"
+            class="form-control"
+            id="inputNumber"
+            min="1"
+            placeholder=""
+          />
+            <div class="invalid-feedback">Value should be greater than zero</div>
+        </div>
+        <div class="col-md-4">
+          <label id="insal" for="inputSalary" class="form-label"
+            >CTC(in LPA)
+          </label><sup class="mand">*</sup>
+          <input
+            name="Salary"
+            type="number"
+            class="form-control"
+            id="inputSalary"
+            min="1"
+            placeholder=""
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Value should be greater than zero</div>
+        </div>
+        <div class="col-md-4">
+          <label for="formFile" class="form-label"
+            >Job Description(.pdf format)<sup class="mand">*</sup></label
+          >
+          <input
+            name="Description"
+            class="form-control"
+            type="file"
+            accept=".pdf"
+            id="formFile"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+
+        <span class="subheadings mt-3"><h5>Eligibility Criteria</h5></span>
+        <div class="row elig">
+          <div class="col mt-2">
+            <label>Courses </label>
+            <div class="checkbox-group form-check form-check-inline">
+              <input type="hidden" name="BTechElg" value="0">
+              <input
+                name="BTechElg"
+                class="form-check-input"
+                type="checkbox"
+                id="CourseCheckbox1"
+                value="1"
+              />
+              <label class="form-check-label" for="CourseCheckbox1"
+                >B.Tech</label
+              >
+              <input type="hidden" name="BTechElg" value="0">
+              
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="hidden" name="MTechElg" value="0">
+              <input
+                name="MTechElg"
+                class="form-check-input"
+                type="checkbox"
+                id="CourseCheckbox2"
+                value="1"
+              />
+              <label class="form-check-label" for="CourseCheckbox2"
+                >M.Tech</label
+              >
+              <input type="hidden" name="MTechElg" value="0">
+            </div>
+          </div>
+          <div class="col-md-9 mt-2">
+            <label>Departments</label>
+            <!-- <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="DepCheckbox0"
+                value="All"
+                onclick="checkAll(this)"
+              />
+              <label class="form-check-label" for="DepCheckbox0"
+                >Select All</label
+              >
+            </div> -->
+            <div class="form-check form-check-inline">
+              <input type="hidden" name="BioTechElg" value="0">
+              <input
+              name="BioTechElg"
+                class="form-check-input"
+                type="checkbox"
+                id="DepCheckbox1"
+                value="1"
+              />
+              <label class="form-check-label" for="DepCheckbox1"
+                >Bio Tech</label
+              >
+              <input type="hidden" name="BioTechElg" value="0">
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="hidden" name="CivilElg" value="0">
+              <input
+              name="CivilElg"
+                class="form-check-input"
+                type="checkbox"
+                id="DepCheckbox2"
+                value="1"
+              />
+              <label class="form-check-label" for="DepCheckbox2"
+                >Civil</label
+              >
+              <input type="hidden" name="CivilElg" value="0">
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="hidden" name="ChemicalElg" value="0">
+              <input
+              name="ChemicalElg"
+                class="form-check-input"
+                type="checkbox"
+                id="DepCheckbox3"
+                value="1"
+              />
+              <label class="form-check-label" for="DepCheckbox3"
+                >Chemical</label
+              >
+              <input type="hidden" name="ChemicalElg" value="0">
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="hidden" name="CSEElg" value="0">
+              <input
+              name="CSEElg"
+                class="form-check-input"
+                type="checkbox"
+                id="DepCheckbox4"
+                value="1"
+              />
+              <input type="hidden" name="CSEElg" value="0">
+              <label class="form-check-label" for="DepCheckbox4">CSE</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="hidden" name="ECEElg" value="0">
+              <input
+                name="ECEElg"
+                class="form-check-input"
+                type="checkbox"
+                id="DepCheckbox5"
+                value="1"
+              />
+              <label class="form-check-label" for="DepCheckbox5">ECE</label>
+              <input type="hidden" name="ECEElg" value="0">
+
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="hidden" name="EEEElg" value="0">
+              <input
+                name="EEEElg"
+                class="form-check-input"
+                type="checkbox"
+                id="DepCheckbox6"
+                value="1"
+              />
+              <label class="form-check-label" for="DepCheckbox6">EEE</label>
+              <input type="hidden" name="EEEElg" value="0">
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="hidden" name="MechElg" value="0">
+              <input
+              name="MechElg"
+                class="form-check-input"
+                type="checkbox"
+                id="DepCheckbox7"
+                value="1"
+              />
+              <label class="form-check-label" for="DepCheckbox7">Mech</label>
+              <input type="hidden" name="MechElg" value="0">
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="hidden" name="MMEElg" value="0">
+              <input
+                name="MMEElg"
+                class="form-check-input"
+                type="checkbox"
+                id="DepCheckbox8"
+                defaultValue="0"
+                value="1"
+              />
+              <label class="form-check-label" for="DepCheckbox8">MME</label>
+              <input type="hidden" name="MMEElg" value="0">
+            </div>
+          </div>
+          <div class="row mt-4">
+          
+          <div class="col-md-5">
+          <label>YearofPassing </label>
+            <div class="checkbox-group form-check form-check-inline">
+              <input type="hidden" name="Elg2023" value="0">
+              <input
+              name="Elg2023"
+                class="form-check-input"
+                type="checkbox"
+                id="YearCheckbox1"
+                value="1"
+              />
+              <label class="form-check-label" for="YearCheckbox1"
+                >2023</label
+              >
+              <input type="hidden" name="Elg2023" value="0">
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="hidden" name="Elg2024" value="0">
+              <input
+              name="Elg2024"
+                class="form-check-input"
+                type="checkbox"
+                id="YearCheckbox2"
+                value="1"
+              />
+              <label class="form-check-label" for="YearCheckbox2"
+                >2024</label
+              >
+              <input type="hidden" name="Elg2024" value="0">
+            </div>
+            <div class="checkbox-group form-check form-check-inline">
+              <input type="hidden" name="Elg2025" value="0">
+              <input
+              name="Elg2025"
+                class="form-check-input"
+                type="checkbox"
+                id="YearCheckbox3"
+                value="1"
+              />
+              <label class="form-check-label" for="YearCheckbox3"
+                >2025</label
+              >
+              <input type="hidden" name="Elg2025" value="0">
+            </div>
+            <div class="checkbox-group form-check form-check-inline">
+              <input type="hidden" name="Elg2026" value="0">
+              <input
+              name="Elg2026"
+                class="form-check-input"
+                type="checkbox"
+                id="YearCheckbox4"
+                value="1"
+              />
+              <label class="form-check-label" for="YearCheckbox4"
+                >2026</label
+              >
+              <input type="hidden" name="Elg2026" value="0">
+            </div>
+            </div>
+            <div class="col-md-7">
+            <div class="form-group row">
+                <label for="inputCGPA" class="col-md-3 col-form-label">CGPA(On Scale 10)</label>
+                <div class="col-md-4">
+                <input name="CGPA" type="number" value="0.00" class="col-md-2 form-control " min="0" max="10" step=".01"id="inputCGPA">
+                </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <span class="subheadings"><h5>Selection Process</h5></span>
+        <div class="row">
+          <div class="form-check form-switch col">
+            <input type="hidden" name="SFR" value="0">
+            <label class="form-check-label" for="Switch1"
+              >Shortlist From Resumes</label
+            >
+            <input
+              name="SFR"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="Switch1"
+              value="1"
+            />
+            <input type="hidden" name="SFR" value="0">
+          </div>
+          <div class="form-check form-switch col">
+            <input type="hidden" name="WT" value="0">
+            <label class="form-check-label" for="Switch2"
+              >Written Test</label
+            >
+            <input
+              name="WT"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="Switch2"
+              value="1"
+            />
+            <input type="hidden" name="WT" value="0">
+          </div>
+          <div class="form-check form-switch col">
+            <input type="hidden" name="OT" value="0">
+            <label class="form-check-label" for="Switch3"
+              >Online Test</label
+            >
+            <input
+            name="OT"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="Switch3"
+              value="1"
+            />
+            <input type="hidden" name="OT" value="0">
+          </div>
+          <div class="form-check form-switch col">
+            <input type="hidden" name="GD" value="0">
+            <label class="form-check-label" for="Switch4"
+              >Group Discussion</label
+            >
+            <input
+            name="GD"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="Switch4"
+              value="1"
+            />
+            <input type="hidden" name="GD" value="0">
+          </div>
+          <div class="form-check form-switch col">
+            <input type="hidden" name="PI" value="0">
+            <label class="form-check-label" for="Switch5"
+              >Personal Interview</label
+            >
+            <input
+            name="PI"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="Switch5"
+              value="1"
+            />
+            <input type="hidden" name="PI" value="0">
+          </div>
+        </div>
+        <div class="col-12">
+          <p><sup class="mand">*</sup>Indicates Mandatory</p>
+        </div>
+        <div>
+          <button id="reset" type="reset" class="btn btn-secondary">Reset</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        </div>
+      </form>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      (function () {
+        "use strict";
+        const forms = document.querySelectorAll(".validated-form");
+        Array.from(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+    <script>
+      function Change(ele){
+        const ctc = document.querySelector("#insal");
+        const val = document.querySelector("#inputType").value;
+        if(val==="Internship"){
+          ctc.innerText="Stipend(in Rs. PM)";
+        }else{
+          ctc.innerHTML="CTC(in LPA)";
+        }
+      }
+      function Changemand(){
+        const ctc = document.querySelector("#insal");
+        const val = document.querySelector("#inputType").value;
+        if(val==="Internship"){
+          ctc.innerText="Stipend(in Rs. PM)";
+        }else{
+          ctc.innerHTML="CTC(in LPA)";
+        }
+      }
+    </script>
+    <script>
+      // const checks = document.querySelectorAll("input[type='checkbox']");
+      // for(let i = 0; i < checks.length; i++){
+      //   if(checks[i].checked="checked"){
+      //     checks[i].setAttribute("value","true");
+      //   }else{
+      //     checks[i].setAttribute("value","true");
+      //   }
+      // }
+
+    </script>
+  </body>
+</html>

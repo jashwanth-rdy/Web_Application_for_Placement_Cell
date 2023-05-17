@@ -1,0 +1,116 @@
+.logo {
+  border-radius: 50%;
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+  width: 70%;
+  height: auto;
+  float: left;
+}
+.full {
+  background-image: url(/images/Pattern1.png);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* background-position: center; */
+
+  /* background-size: auto 100%; */
+  /* background-size: ; */
+}
+.mand {
+  color: red;
+  font-size: medium;
+}
+.navcss {
+  position: sticky;
+  z-index: 1;
+}
+
+.mainh1 {
+  font-size: 2em;
+  font-weight: 600;
+  color: #29256a;
+}
+.navimg {
+  height: 5%;
+  width: auto;
+}
+.mainh2 {
+  font-size: 1em;
+  font-weight: 500;
+  color: #29256a;
+}
+.dms {
+  font-size: 95%;
+}
+
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #d0d0d0;
+}
+.links {
+  text-decoration: none;
+  color: #29256a;
+}
+
+.mess {
+  background-color: #eaeaea;
+  color: #284571;
+  font-weight: 400;
+  text-size-adjust: 4vw;
+  justify-content: center;
+  border-radius: 37px;
+}
+
+.msg {
+  display: block;
+  margin: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  padding: 10px;
+  background-image: url(/images/Pattern1.png);
+}
+
+.aboutcss {
+  display: block;
+  margin: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  padding: 10px;
+  background-image: url(/images/Pattern1.png);
+}
+.pastimg {
+  width: 60%;
+  height: auto;
+}
+.pasti {
+  display: block;
+  margin: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  text-align: center;
+  padding: 10px;
+}
+
+.messages {
+  border-radius: 50%;
+  height: 5em;
+}
+
+@media all and (min-width: 992px) {
+  .navbar .nav-item:hover .dropdown-menu {
+    display: block;
+  }
+}
+
+.nav-item:hover {
+  background-color: grey;
+  transition: all 0.5s;
+  border-radius: 10%;
+}
+
+.full {
+  background-image: url(/images/Pattern1.png);
+}

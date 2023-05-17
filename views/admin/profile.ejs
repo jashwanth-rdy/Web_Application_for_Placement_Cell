@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/stu.css" />
+    <link rel="stylesheet" href="/css/prof.css" />
+  </head>
+  <body>
+    <!-- Navbar Start -->
+
+    <%- include('../partials/admnavbar.ejs')%>
+
+    <!-- Navbar End -->
+    <div class="container">
+      <h2 id="prof" class="py-3">Profile</h2>
+      <form action="/ad/<%-adm.Emp_id%>/profile?_method=PUT" method="POST" class="row g-3 validated-form" novalidate>
+        <div class="col-md-4">
+          <label for="inputRollNo" class="form-label">Employee ID</label>
+          <input
+            type="number"
+            class="form-control"
+            id="inputRollNo"
+            min="100000"
+            max="899999"
+            value="<%- adm.Emp_id %>"
+            disabled
+            required
+          />
+        </div>
+        <div class="col-md-4">
+          <label for="inputFirstName" class="form-label">FirstName</label>
+          <input
+            name="FirstName"
+            type="text"
+            class="form-control"
+            id="inputFirstName"
+            value="<%- adm.FirstName %>"
+            required
+            readonly
+          />
+          <!-- <div class="valid-feedback">Looks good!</div> -->
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-4">
+          <label for="inputLastName" class="form-label">LastName</label>
+          <input
+          name="LastName"
+            type="text"
+            class="form-control"
+            id="inputLastName"
+            value="<%- adm.LastName %>"
+            required
+            readonly
+          />
+        </div>
+        <div class="col-md-4">
+          <label for="inputDesg" class="form-label">Designation</label>
+          <select
+            name="Designation"
+            id="inputDesg"
+            class="form-select"
+            style="pointer-events: none"
+            required
+          >
+            <option <%= adm.Designation == 'Dean' ? 'selected' : ''  %> value="Dean">Dean</option>
+            <option <%= adm.Designation == 'AssocDean' ? 'selected' : ''  %> value="AssocDean">Assoc. Dean</option>
+            <option <%= adm.Designation == 'TPCCoordinator' ? 'selected' : ''  %> value="TPCCoordinator">TPC Coordinator</option>
+            <option <%= adm.Designation == 'FacultyCoordinator' ? 'selected' : ''  %> value="FacultyCoordinator">FacultyCoordinator</option>
+          </select>
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-4">
+          <label for="inputDept" class="form-label">Department</label>
+          <select
+            name="Dept"
+            id="inputDept"
+            class="form-select"
+            style="pointer-events: none"
+            required
+          >
+          <% const options = ["Placement Section","Bio Technology", "Civil Engineering", "Chemical Engineering", "Computer Science & Engineering", "Electronics & Communication Engineering", "Electrical Engineering" ,"Mechanical Engineering","Metallurgical and Materials Engineering"];
+             const values = ['TPS','BioTech','Civil','Chemical','CSE','ECE','EEE','Mech','MME'];
+            for ( let i = 0; i < options.length; i++ )
+            {
+                let selec = ( adm.Dept == values[i] ) ? 'selected' : '';
+            %>
+                <option value="<%=values[i] %>" <%=selec %>><%=options[i] %></option>
+            <%}%>
+           
+          </select>
+
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="col-md-4">
+          <label for="inputPEmail" class="form-label">Personal Email</label>
+          <input
+            <%= adm.PersonalMail == null ? '' : 'value='%><%-adm.PersonalMail%>
+            name="PersonalMail"
+            type="email"
+            class="form-control"
+            id="inputPEmail"
+            placeholder="Personal Mail"
+            pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+            readonly
+          />
+          <div class="invalid-feedback">Invalid Email</div>
+        </div>
+        <div class="col-md-4">
+          <label for="inputNumber" class="form-label">Contact Number</label>
+          <input
+            <%= adm.Contact == null ? '' : 'value='%><%-adm.Contact%>
+            name="Contact"
+            type="number"
+            class="form-control"
+            id="inputNumber"
+            placeholder="Mobile Number"
+            min="1000000000"
+            max="9999999999"
+            readonly
+          />
+          <div class="invalid-feedback">Invalid Contact Number</div>
+        </div>
+        <div class="col-md-4">
+          <label for="inputEmail" class="form-label">Email</label>
+          <input
+            value="<%- adm.Email %>"
+            type="email"
+            class="form-control"
+            id="inputEmail"
+            pattern="[1-8][1|2][9|0|1|2][1-2][0-9][0-9]+@student.nitandhra.ac.in"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="col-12 justify-content-center">
+          <button id="editprof" type="button" class="btn btn-secondary">
+            Edit
+          </button>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="/javascript/admprofileedit.js"></script>
+
+    <script>
+      (function () {
+        "use strict";
+        const forms = document.querySelectorAll(".validated-form");
+        Array.from(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+  </body>
+</html>

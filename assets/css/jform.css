@@ -1,0 +1,32 @@
+/* .jobprofile{
+    display: block;
+    justify-content: center;
+    margin: 10%;
+} */
+.mand{
+    color: red;
+    font-size:medium;
+}
+.hor{
+    display: none;
+}
+/* .elig{
+    margin-top: 1%;
+} */
+.form{
+    display: block;
+}
+body{
+    background-color: aliceblue;
+}
+.heading{
+    margin-top: 2%;
+  background-color: bisque;
+    text-align: center;
+    padding: 1%;
+}
+.subheadings{
+    display:inline-block;
+    /* background-color: antiquewhite; */
+    margin-bottom: 1%;
+}
